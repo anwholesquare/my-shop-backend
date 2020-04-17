@@ -1,6 +1,23 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+$host = "";
+$user = "";
+$pass = "";
+$database = "";
+	
+if (getenv("CLEARDB_DATABASE_URL") !== false){
+	$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+	$host = $url["host"];
+	$user = $url["user"];
+	$pass = $url["pass"];
+	$database = substr($url["path"], 1);
+}else {
+	$host = "localhost";
+	$user = "root";
+	$pass = "";
+	$database = "my-shop";
+}
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -75,10 +92,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
+	'hostname' => $host,
+	'username' => $user,
+	'password' => $pass,
+	'database' => $database,
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
